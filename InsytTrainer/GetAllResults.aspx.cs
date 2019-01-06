@@ -43,6 +43,7 @@ namespace InsytTrainer
                     if ((row.FindControl("chkSelect") as CheckBox).Checked)
                     {
                         string filePath = (row.FindControl("lblFilePath") as Label).Text;
+
                         zip.AddFile(filePath, "Data");
                     }
                 }
