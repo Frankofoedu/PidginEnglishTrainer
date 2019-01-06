@@ -16,12 +16,12 @@ namespace InsytTrainer
 {
     public partial class Classifier : System.Web.UI.Page
     {
-       static List<Word> _Words = new List<Word>();
-       static List<VaderClassification> Done = new List<VaderClassification>();       
-       static int count = 0;
-       static string dataFolder;
-      static  string countFilePath;
-      static  string resultFilePath;
+        List<Word> _Words = new List<Word>();
+        List<VaderClassification> Done = new List<VaderClassification>();       
+        int count = 0;
+        string dataFolder;
+        string countFilePath;
+        string resultFilePath;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!User.Identity.IsAuthenticated)
@@ -67,8 +67,23 @@ namespace InsytTrainer
                         File.WriteAllText(countFilePath, count.ToString());
                     }
 
+                    Session["count"] = count;
+                    Session["resultPath"] = resultFilePath;
+                    Session["countPath"] = countFilePath;
+                    Session["words"] = _Words;
+                    Session["done"] = Done;
 
                     Display(count);
+                }
+                else
+                {
+                    
+                    resultFilePath = Session["resultPath"].ToString();
+                    countFilePath = Session["countPath"].ToString();
+                    _Words = (List<Word>)Session["words"];
+                    Done = (List<VaderClassification>)Session["done"];
+
+                    count = Convert.ToInt32(Session["count"]);
                 }
             }
             
@@ -93,6 +108,9 @@ namespace InsytTrainer
 
         private void Display(int index)
         {
+            Session["count"] = index;
+            Session["done"] = Done;
+
             var curWord = _Words[index];
             var curClass = Done[index];
 
