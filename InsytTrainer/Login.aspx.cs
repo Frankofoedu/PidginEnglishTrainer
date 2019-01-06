@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using System;
+using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 
@@ -32,7 +33,7 @@ namespace WebFormsIdentity
             var userStore = new UserStore<IdentityUser>();
             var userManager = new UserManager<IdentityUser>(userStore);
             var user = userManager.Find(UserName.Text, Password.Text);
-
+          
             if (user != null)
             {
                 var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
